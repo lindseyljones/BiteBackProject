@@ -2,7 +2,7 @@
 
 ## My Responsibilities
 
-### I was the Requirement Manager for this project development team. I handled the requirement elicitation process, created the GitHub issues and generated requirements needed to produce a final project that meets the needs of the potential users.
+### I was the Requirements Manager for this product development team. I handled the requirement elicitation process, created the GitHub issues, and generated requirements needed to produce a final project that meets the needs of the potential users.
 
 ### On the code side, I helped implement the functionality of the site by creating the following features:
 - uploading profile pictures from google login information
