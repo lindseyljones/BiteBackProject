@@ -1,4 +1,6 @@
-# Biteback (A Course Project for the University of Virginia)
+# Biteback 
+
+*(A Course Project for the University of Virginia)*
 
 ## My Responsibilities
 
