@@ -1,0 +1,15 @@
+:root {
+  --pink: #FF006B;
+  --black-900: rgba(18, 18, 18, 1);
+  --black-500: rgba(128, 126, 126, 1);
+  --black-200: rgba(234, 234, 234, 1);
+  --button-large-font-family: "Figtree", Helvetica;
+  --button-large-font-weight: 500;
+  --button-large-font-size: 22px;
+  --button-large-letter-spacing: 0px;
+  --button-large-line-height: 34px;
+  --button-large-font-style: normal;
+  --variable-collection-white: rgba(255, 255, 255, 1);
+  --variable-collection-white-duplicate: rgba(255, 255, 255, 1);
+}
+

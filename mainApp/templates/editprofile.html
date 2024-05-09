@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="globals.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mainApp/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'mainApp/styleguide.css' %}" type="text/css">
+</head>
+<body>
+<div class="main">
+      <div class="manage-account">Manage My Account</div>
+    <div class="update-prof">
+        <div class="update-text">Update Profile</div>
+        <form>
+            <div class="change-username">
+            <label>Change your UserName:</label>
+            <input type="text" name="username" placeholder="UserName"/>
+                <input type="submit"/>
+            </div>
+        </form>
+    </div>
+    <div class="update-acc">
+        <div class="update-text">Update Account</div>
+    </div>
+</div>
+</body>
+</html>

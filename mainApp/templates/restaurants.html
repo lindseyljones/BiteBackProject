@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Restaurants in Charlottesville</h1>
+    <ul>
+        {% for restaurant in restaurants %}
+            <li>{{ restaurant.name }} - Rating: {{ restaurant.rating }}</li>
+            <li>Number of Ratings: {{ restaurant.num_of_ratings }}</li>
+        {% if restaurant.open_now == True %}
+        <li>Status: Open</li>
+        {% else %}
+        <li>Status: Closed</li>
+        {% endif %}
+            <hr>
+        {% endfor %}
+    </ul>
+</body>
+</html>

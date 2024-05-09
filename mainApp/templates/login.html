@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<html lang="en">
+<link rel="shortcut icon" type="image/png" href="{% static 'icons/favicon-32x32.png' %}" >
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            padding: 20px;
+            weight: bold;
+        }
+        .slogan {
+            font-size: 16px;
+            color: #FF006B;
+            margin-top: 10px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+        /* Pink button on hover */
+        .btn.btn-light:hover {
+            background-color: #FF006B;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to <span style="color:#FF006B">Bite</span>Back</h1>
+            <p class="slogan">insight with every bite</p>
+        </div>
+        <p> As your destination for honest reviews of Charlottesville's dining scene, BiteBack offers insight with
+            every bite!
+            Here, you can report various experiences, from sharing reviews to highlighting issues like
+            poor customer service or out-of-stock items. Simply log in or report anonymously and share your
+            experience with the community. Join us in improving Charlottesville's restaurants by sharing your insights: </p>
+        <br>
+        <a href="{% provider_login_url 'google' %}"><button type="button" class="btn btn-light btn-lg">Login with Google</button></a>
+        <a href="{% url 'anonymous_access' %}"><button type="button" class="btn btn-light btn-lg">Continue Anonymously</button></a>
+    <br>
+        <br>
+    </div>
+</body>
+</html>

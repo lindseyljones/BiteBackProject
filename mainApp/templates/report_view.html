@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+{% block posts %}
+<div style="display: flex; flex-direction: column; padding: 20px;">
+    <h1>Post: {{post.title}}</h1>
+    <h1>Post ID: {{post.id}}</h1>
+    <hr>
+    {% for report in reports %}
+    <div class="text-wrapper-37" style="margin-top: 30px; width: 40vw; margin-bottom: 30px;">
+        <li>Reporter: {{ report.user.username }}</li>
+        <li>Report Reason: {{ report.label }}</li>
+        <li>Report Content: {{ report.content }}</li>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+
+{% block sidebar %}
+    <div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+{% endblock %}
+
+{%endblock%}

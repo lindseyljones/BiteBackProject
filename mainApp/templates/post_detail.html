@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% extends 'index.html' %} {% block posts %}
+<div class="container">
+    <div class="card d-flex mt-4 h-auto" style="width: 90%; margin-left: 5vw">
+      <div class="card-header d-flex align-items-center">
+          <p>Author: {{ post.user.username }}</p> 
+          <div class="align-items-right">
+            <span class="topic-button">{{ post.topic }}</span>
+            <span class="topic-button-2">{{post.restaurant.name}}</span>
+          </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <h6 class="card-subtitle mb-2">
+          Post ID: {{ post.id }}
+          Posted: {{ post.time_created|timesince }} ago
+        </h6>
+        <h6 class="card-subtitle mb-2 text-muted" style="font-size: 14px; color: #666;">
+          Status: <span style="color: #FF006B;">{{ post.status }}</span>
+        </h6>
+        <p class="card-text">{{ post.description }}</p>
+        {% if post.file %}
+            {% if post.file.name|lower|slice:"-4:" == '.jpg' or post.file.name|lower|slice:"-5:" == '.jpeg' or post.file.name|lower|slice:"-4:" == '.png'%}
+            <img src="{{ post.file.url }}" alt="{{ post.file.name }}" class="card-img-top"
+              style="max-width: 60%; height: auto; border: 1px solid #ddd; display: block; margin: 0 auto;">
+            {% else %}
+            <a href="{{ post.file.url }}" class="btn btn-light">{{ post.file.name }}</a>
+            {% endif %}
+            {% else %}
+            No file attached.
+            {% endif %}
+        <br><br>
+        <form method="post" action="{% url 'update_status' pk=post.id %}">
+            {% csrf_token %}
+            <li class="list-group-item">
+                <label for="status_{{ post.id }}">Change Status:</label>
+                <select name="status_{{ post.id }}" id="status_{{ post.id }}">
+                    <option value="In Progress" {% if post.status == "In Progress" %} selected {% endif %}>In
+                        Progress
+                    </option>
+                    <option value="Resolved" {% if post.status == "Resolved" %} selected {% endif %}>Resolved</option>
+                </select>
+                <button type="submit" name="post_id" value="{{ post.id }}">Update</button>
+            </li>
+        </form>
+        <form method="post" action="{% url 'view_reports' %}">
+            {% csrf_token %}
+            <button type="submit" name="post_id" value="{{ post.id }}">View Reports</button>
+        </form>
+        {%if post.status == "Resolved"%}
+        <form method="post" action="{% url 'update_resolution_message' pk=post.id %}">
+            {% csrf_token %}
+            <li class="list-group-item">
+                <label for="status_{{ post.id }}">Change Resolution Message:</label>
+                <input type="text" id="resolution_message" name="resolution_message" value="{{ post.resolution_message }}">
+                <button type="submit" name="post_id" value="{{ post.id }}">Update</button>
+            </li>
+        </form>
+        {% endif %}
+        <a type="button" class="btn btn-custom-color" href="{% url 'delete' pk=post.pk %}">
+            Delete
+        </a>
+        <div class="right-elements">
+            <a type="button" class="btn btn-custom-color" href="{% url 'document_view' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
+                </svg> Go Back
+            </a>
+        </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  <div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+    <div class="text-white p-3">
+      <h4 class="mb-3" style="color:#ff006b; text-align:center;">Welcome Site Admin!</h4>
+      <p style="text-align:center;">
+        View a post's detail here. You should see options to change its status at the bottom of the post.
+      </p>
+      <hr>
+      <p>You can enter a custom reason for resolution once you have resolved a post.</p>
+    </div>
+  </div>
+{% endblock %}

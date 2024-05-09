@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+{% load socialaccount %} {% load static %} {% load django_bootstrap5 %}
+{% bootstrap_css %} {% bootstrap_javascript %}
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'mainApp/index-style.css' %}" type="text/css" />
+  <link rel="shortcut icon" type="image/png" href="{% static 'icons/favicon-32x32.png' %}" >
+  <title>BiteBack</title>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; min-width: 20vw">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 100%">
+      <div href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+        <span class="fs-4 fw-bold tex" style="color:#FF006B">Bite</span>
+        <span class="fs-4 fw-bold">Back</span>
+      </div>
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="{% url 'index' %}" id="home-nav" class="nav-link d-flex justify-content-start align-middle active-nav-bg"
+            aria-current="page">
+            <img class="me-1" src="{% static 'icons/house-icon.svg' %}"/>
+            <span style="color: white;">Home</span>
+          </a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="{% url 'myposts' %}" id="myposts-nav" class="nav-link d-flex justify-content-start align-middle" aria-current="page">
+            <img class="me-1" src="{% static 'icons/list-icon.svg' %}" />
+            <span style="color:white">My Posts</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'settings' %}" id="settings-nav" class="nav-link d-flex justify-content-start align-middle" aria-current="page">
+            <img class="me-1" src="{% static 'icons/gear-icon.svg' %}" />
+            <span style="color:white">Settings</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if user.is_admin %}
+        <li class="nav-item">
+          <a href="{% url 'document_view' %}" id="document-nav" class="nav-link d-flex justify-content-start align-middle"
+          <a href="{% url 'document_view' %}" id="document-nav" class="nav-link d-flex justify-content-start align-middle"
+            aria-current="page">
+            <img class="me-1" src="{% static 'icons/file-icon.svg' %}" />
+            <span style="color:white">View Submitted Content</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      <div class="d-flex" style="width: 18vw">
+        <a href="{% url 'createpost' %}" class="btn btn-custom-color w-100">
+          New Post
+        </a>
+      </div>
+        <hr />
+        <div class="dropdown" style="display: flex;">
+          <a
+            href="#"
+            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="width: fit-content;"
+          >
+              {% if user.is_authenticated %}
+              <img
+              src="{{ picture }}"
+              alt=""
+              width="32"
+              height="32"
+              class="rounded-circle me-2"
+            />
+              {%else%}
+            <img
+              src="{% static 'images/blank-profile.png' %}"
+              alt=""
+              width="32"
+              height="32"
+              class="rounded-circle me-2"
+            />
+              {%endif%}
+            <strong>{{ user.username }}</strong>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item" href="{% url 'settings' %}">Settings</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign out</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+            {%endif%}
+          </ul>
+          {% if user.is_admin %}
+          <p style="margin-top: auto; margin-bottom: auto; margin-left: 10px;">Logged in as admin.</p>
+          {% endif %}
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  {% block main %}
+  <div class="d-flex position-fixed justify-content-center" style="
+        min-width: 60vw;
+        max-height: 100vh;
+        min-height: 100vh;
+        margin-left: 20vw;
+        margin-right: 20vw;
+      ">
+    <div class="flex-column mt-4 g-0 justify-content-start align-items-center"
+      style="height: 100vh; overflow-y: auto; width: 90%">
+      {% block posts %}
+      <div class="card d-flex mt-4 h-auto" style="width: 98%;">
+        <form method="get" action="{% url 'search-filter' %}">
+          {% csrf_token %}
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <input placeholder="Search Posts..."
+              style="width: 95%; border-top: none; border-left: none; margin-left: 1vh; border-right: none; border-width: 1px; border-color: #D2D2D2;"
+              name="search_bar" value={{search_query}}>
+            {% if search_query or filters or topic_filters %}
+            <a class="btn btn-light" href="{% url 'clear_search'%}"
+              style="background-color: transparent; border: none;"><img class="me-1"
+                src="{% static 'icons/x-icon.svg' %}" /></a>
+            {% endif %}
+            <button class="btn btn-custom-color mt-2" style="margin-right: 1vh; margin-left: 1vh;">Search/Filter</button>
+          </div>
+          <div class="d-flex flex-wrap mt-3">
+            <div class="dropdown me-2">
+              <button
+                class="btn btn-outline-custom-color dropdown-toggle"
+                type="button"
+                id="restaurantDropdown"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+                style="margin-bottom: 1vh; margin-left: 1vh;"
+              >
+                Filter By Restaurant
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="restaurantDropdown" style="height: 300px; overflow-y: scroll;">
+                {% for restaurant in restaurants %}
+                <li>
+                  <label class="dropdown-item">
+                    <input type="checkbox" class="form-check-input me-2" name="rest_{{restaurant.id}}"
+                      value="{{restaurant.id}}" {% if restaurant.id in filters %} checked {% endif %}>
+                    {{restaurant.name}}
+                  </label>
+                </li>
+                {% endfor %}
+              </ul>
+              {% if filters %}
+              <div class="mt-2">
+                Selected Restaurants:
+                {% for restaurant in restaurants %}
+                {% if restaurant.id in filters %}
+                <span class="badge bg-secondary">{{ restaurant.name }}</span>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-custom-color dropdown-toggle"
+                type="button"
+                id="topicDropdown"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+              >
+                Filter By Topic
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="topicDropdown">
+                {% for topic in topics %}
+                <li>
+                  <label class="dropdown-item">
+                    <input type="checkbox" class="form-check-input me-2" name="top_{{topic}}"
+                      value="{{topic}}" {% if topic in topic_filters %} checked {% endif %}>
+                    {{topic}}
+                  </label>
+                </li>
+                {% endfor %}
+              </ul>
+              {% if topic_filters %}
+              <div class="mt-2">
+                Selected Topics:
+                {% for topic in topics %}
+                {% if topic in topic_filters %}
+                <span class="badge bg-secondary">{{ topic }}</span>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+      {% for post in posts %}
+      {% if post.status == "New" or post.status == "In Progress" %}
+      <div class="card d-flex mt-4 h-auto" style="width: 98%; margin-bottom:45px;">
+        <div class="card-header d-flex align-items-center">
+          <div>
+            {% if post.is_anonymous %}
+            <p>Author: Anonymous</p>
+            {% else %}
+            <p>Author: {{ post.user.username }}</p>
+            {% endif %}
+          </div>
+          <div class="align-items-right">
+              <span class="topic-button">{{ post.topic }}</span>
+              <span class="topic-button-2">{{post.restaurant.name}}</span>
+            </div>
+        </div>
+        <div class="card-body" >
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="mb-2 small-font">
+            Posted: {{ post.time_created|timesince }} ago
+          </p>
+          <h6 class="card-subtitle mb-2 text-muted" style="font-size: 14px; color: #666;">
+            Status: <span style="color: #FF006B;">{{ post.status }}</span>
+          </h6>
+          <p class="card-text">{{ post.description }}</p>
+
+          {% if post.file %}
+          {% if post.file.name|lower|slice:"-4:" == '.jpg' or post.file.name|lower|slice:"-5:" == '.jpeg' or post.file.name|lower|slice:"-4:" == '.png'%}
+          <img src="{{ post.file.url }}" alt="{{ post.file.name }}" class="card-img-top"
+            style="max-width: 60%; height: auto; border: 1px solid #ddd; display: block; margin: 0 auto;">
+          {% else %}
+          <a href="{{ post.file.url }}" class="btn btn-light" target="_blank">{{ post.file.name }}</a>
+          {% endif %}
+          {% else %}
+          <!-- Handle the case where there is no file attached to the post -->
+          No file attached.
+          {% endif %}
+          {% if not user.is_authenticated %}
+              <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#loginErrorModal">Report Post</button>
+              <div class="modal fade" id="loginErrorModal" tabindex="-1" aria-labelledby="loginErrorModalLabel" aria-hidden="true" data-bs-backdrop="false">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="loginErrorModalLabel">Error</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              Please login to report post.
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% else %}
+              <form method="post" action="{% url 'report_post' %}" class="report-button">
+                  {% csrf_token %}
+                  <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-outline-danger btn-sm">Report Post</button>
+              </form>
+          {% endif %}
+
+          <!-- Bootstrap Bundle with Popper -->
+          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-HrvM7E54BWTln4UwnbxUggeeq0lhh4IOv46wvJL1uq3ck1+iHu+lf4wewlaPn8q" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-0C7KOfstQ+1vS2tDLQ+YQ5qpo2FPHn04Pf/z+eopNU0soYVYz+OlgpmejH4a8zQ2" crossorigin="anonymous"></script>
+
+
+
+
+        </div>
+      </div>
+      {%endif%}
+      {% endfor %}
+      {% endblock %}
+    </div>
+  </div>
+
+  <!-- Info sidebar -->
+  {% block sidebar %}
+  <div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+    <div class="text-white p-3">
+      <h4 class="mb-3" style="color:#ff006b; text-align:center;">Welcome!</h4>
+      <p style="text-align:center;">Discover honest reviews and insights into Charlottesville's dining scene. Whether
+      you've had a stellar meal
+      or encountered service issues, your feedback matters. Join the community to share your experiences anonymously
+      or with your account. Let's elevate dining experiences together!</p>
+      <hr>
+      <p>Login to your account by navigating to your profile on the bottom right to access all features!</p>
+      <hr>
+      <p>Check out "My Posts" to see what you've shared.</p>
+      <hr>
+      <p>Visit "Settings" to manage your account preferences.</p>
+      <br>
+      <p class="slogan" style="width: fit-content; ">Ready to bite back?<br>
+      Hit "New Post" and share your thoughts!</p>
+    </div>
+  </div>
+
+  <div id="reopenWelcomeTab" style="display: none; position: fixed; top: 95%; right: 20px; transform: translateY(-50%); background-color: #FF006B; color: white; padding: 10px; border-radius: 5px; cursor: pointer;">Reopen Welcome Tab</div>
+    <div id="topicButtons" class="mt-4" style="display: none; position: fixed; top: 20%; right: 2vh; transform: translate(0, -50%); background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 18%; overflow-y: auto;">
+      <span class="fs-4 fw-bold tex" style="color:#FF006B">Topics</span><br>
+      {% for topic in topics %}
+      <form method="get" action="{% url 'search-filter' %}">
+        {% csrf_token %}
+        <button class="btn btn-light mt-2" name="top_button" value="{{ topic }}" type="submit">{{ topic }}</button>
+      </form>
+      {% endfor %}
+    </div>
+  </div>
+  </div>
+  {% endblock %}
+  {% endblock %}
+<script>
+  var current_url = window.location.href;
+  console.log(current_url);
+
+  if(current_url.includes("index") || current_url.includes("search_filter")){
+    document.getElementById("home-nav").classList.add("active-nav-bg");
+    document.getElementById("myposts-nav").classList.remove("active-nav-bg");
+    document.getElementById("settings-nav").classList.remove("active-nav-bg");
+    document.getElementById("document-nav").classList.remove("active-nav-bg");
+  }
+  else if(current_url.includes("my_posts")){
+    document.getElementById("home-nav").classList.remove("active-nav-bg");
+    document.getElementById("myposts-nav").classList.add("active-nav-bg");
+    document.getElementById("settings-nav").classList.remove("active-nav-bg");
+    document.getElementById("document-nav").classList.remove("active-nav-bg");
+  }
+  else if(current_url.includes("settings")){
+    document.getElementById("home-nav").classList.remove("active-nav-bg");
+    document.getElementById("myposts-nav").classList.remove("active-nav-bg");
+    document.getElementById("settings-nav").classList.add("active-nav-bg");
+    document.getElementById("document-nav").classList.remove("active-nav-bg");
+  }
+  else if(current_url.includes("documents")){
+    document.getElementById("home-nav").classList.remove("active-nav-bg");
+    document.getElementById("myposts-nav").classList.remove("active-nav-bg");
+    document.getElementById("settings-nav").classList.remove("active-nav-bg");
+    document.getElementById("document-nav").classList.add("active-nav-bg");
+  }
+  else{
+    document.getElementById("home-nav").classList.remove("active-nav-bg");
+    document.getElementById("myposts-nav").classList.remove("active-nav-bg");
+    document.getElementById("settings-nav").classList.remove("active-nav-bg");
+    document.getElementById("document-nav").classList.remove("active-nav-bg");
+  }
+</script>
+
+</body>
+</html>

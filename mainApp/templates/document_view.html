@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% extends 'index.html' %} {% block posts %} 
+<div class="center-elements">
+    <div class=status-filter-buttons>
+        <a type="button" class="btn btn-custom-color" href="{% url 'document_view' %}?status=new">
+            New
+        </a>
+        <a type="button" class="btn btn-custom-color" href="{% url 'document_view' %}?status=in_progress">
+            In Progress
+        </a>
+        <a type="button" class="btn btn-custom-color" href="{% url 'document_view' %}?status=resolved">
+            Resolved
+        </a>
+        <a type="button" class="btn btn-custom-color" href="{% url 'document_view' %}">
+            All Posts
+        </a>
+    </div>
+</div>
+{% for post in posts %}
+<div class="container">
+  <div class="card d-flex mt-4 h-auto" style="width: 85%; margin-left: 5vw">
+    <div class="card-header d-flex align-items-center">
+        <p>Author: {{ post.user.username }}</p>
+        <div class="align-items-right">
+          <span class="topic-button">{{ post.topic }}</span>
+          <span class="topic-button-2">{{post.restaurant.name}}</span>
+        </div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <h6 class="card-subtitle mb-2">
+        ID: {{ post.id }} <br>
+        Posted: {{ post.time_created|timesince }} ago
+      </h6>
+      <h6 class="card-subtitle mb-1">
+        <a href="{% url 'post_detail' pk=post.id %}">View Full Post</a>
+      </h6>
+    </div>
+</div>
+</div>
+{% endfor %} 
+{% endblock %}
+
+{% block sidebar %}
+  <div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+    <div class="text-white p-3">
+      <h4 class="mb-3" style="color:#ff006b; text-align:center;">Welcome Site Admin!</h4>
+      <p style="text-align:center;">
+        View all the submitted content here! You can filter it by their status at the top. When you
+        click on "View Full Post", the post's status will automatically change to In Progress.
+      </p>
+      <hr>
+      <p>Once you view an entire post, you will see options to change its status and an option to delete the post.</p>
+      <hr>
+      <p>You can enter a custom reason for resolution once you have resolved a post.</p>
+    </div>
+  </div>
+{% endblock %}

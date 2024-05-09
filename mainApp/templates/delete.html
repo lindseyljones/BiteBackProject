@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load socialaccount %} {% load static %} {% load django_bootstrap5 %}
+{% bootstrap_css %} {% bootstrap_javascript %}
+
+<style>
+  .btn-custom-color {
+    background-color: #FF006B;
+    border-color: #FF006B;
+  }
+  .btn-outline-custom-color {
+    border-color: #FF006B;
+  }
+  .btn-custom-color:hover {
+    background-color: #D70053;
+    border-color: #D70053;
+  }
+</style>
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <form class="p-4 border rounded shadow" action="{% url 'delete' pk=post.pk %}" method="POST">
+    {% csrf_token %}
+    <p class="mb-4">Are you sure you want to delete "{{ object.title }}"?</p>
+    <button type="submit" class="btn btn-custom-color me-2">Confirm</button>
+    <a type="button" class="btn btn-outline-custom-color" href="{% url 'index' %}">
+      Cancel
+    </a>
+  </form>
+</div>
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% extends 'index.html' %} {% block posts %} {% for post in user_posts %}
+<div class="container">
+  <div class="card d-flex mt-4 h-auto" style="width: 100%;">
+    <div class="card-header d-flex align-items-center">
+          <div>
+            <p>Author: {{ post.user.username }}</p>
+          </div>
+          <div class="align-items-right">
+              <span class="topic-button">{{ post.topic }}</span>
+              <span class="topic-button-2">{{post.restaurant.name}}</span>
+            </div>
+        </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ post.title }}</h5>
+      <h6 class="card-subtitle mb-2">
+        Posted: {{ post.time_created|timesince }} ago
+      </h6>
+      <h6 class="card-subtitle mb-2 text-muted" style="font-size: 14px; color: #666;">
+        Status: <span style="color: #FF006B;">{{ post.status }}</span>
+      </h6>
+      <p class="card-text">{{ post.description }}</p>
+      {% if post.file %}
+          {% if post.file.name|lower|slice:"-4:" == '.jpg' or post.file.name|lower|slice:"-5:" == '.jpeg' or post.file.name|lower|slice:"-4:" == '.png' %}
+          <img src="{{ post.file.url }}" alt="{{ post.file.name }}" class="card-img-top"
+            style="max-width: 60%; height: auto; border: 1px solid #ddd; display: block; margin: 0 auto;">
+          {% else %}
+          <a href="{{ post.file.url }}" class="btn btn-light">{{ post.file.name }}</a>
+          {% endif %}
+          {% else %}
+          No file attached.
+          {% endif %}
+      <br><br>
+      <a type="button" class="btn btn-custom-color" href="{% url 'delete' pk=post.pk %}">
+        Delete
+      </a>
+      {% if post.status == "Resolved"%}
+      <div class="card-footer text-danger">
+        Reason for Resolution: {{ post.resolution_message }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock %}
+
+{% block sidebar %}
+<div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+  <div class="text-white p-3">
+
+    <h4 class="mb-3" style="color:#ff006b; text-align:center;">Welcome to My Posts!</h4>
+    <p style="text-align:center;">
+      View all of the posts you've made on BiteBack on this page! You can see the status
+      of your posts here and delete any posts you want to delete. Any post that you've made that has
+      been resolved will also show up here with a reason for resolution.
+    </p>
+  </div>
+</div>
+{% endblock %}

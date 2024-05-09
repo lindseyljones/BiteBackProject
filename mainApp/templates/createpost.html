@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'index.html' %} {% block posts %}
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+        <form method="POST" action="{% url 'createpost' %}" enctype="multipart/form-data" class="whitebox">
+            <header class="header">
+                <h1 class="text-wrapper-36 pink-text">New Post</h1>
+            </header>
+            {% csrf_token %}
+            <div>
+                {{ form.as_p }}
+                <label for="restaurant">Restaurant:</label>
+                <select id="restaurant" style="margin-bottom: 10px;" name="restaurant">
+                    {% for restaurant in restaurants %}
+                    <option value={{restaurant.id}}>{{restaurant.name}}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-pink btn-lg w-100" type="submit">Post</button>
+            </div>
+        </form>
+    </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post</title>
+    <style>
+        .btn-pink {
+            background-color: #FF006B;
+            color: #fff;
+        }
+
+        .btn-pink:hover {
+            background-color: #bf0251;
+            color: #fff;
+        }
+
+        .pink-text {
+            color: #FF006B;
+        }
+    </style>
+</head>
+{% endblock %}
+
+{% block sidebar %}
+<div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+  <div class="text-white p-3">
+    <h4 class="mb-3" style="color:#ff006b; text-align:center;">Create a new post!</h4>
+    <p style="text-align:center;">
+      Ready to add a post about a restaurant? Fill in this form and press Post! You should see it appear
+      on the homepage and under "My Posts".
+    </p>
+  </div>
+</div>
+{% endblock %}

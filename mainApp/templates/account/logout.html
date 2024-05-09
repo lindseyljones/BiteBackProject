@@ -1,0 +1,74 @@
+{% extends "account/base_manage.html" %}
+{% load allauth i18n %}
+{% block head_title %}
+{% trans "Sign Out" %}
+{% endblock head_title %}
+{% block content %}
+<!DOCTYPE html>
+{% load socialaccount %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<html lang="en">
+<link rel="shortcut icon" type="image/png" href="{% static 'icons/favicon-32x32.png' %}" >
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Out</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            padding: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .slogan {
+            font-size: 16px;
+            color: #FF006B;
+            margin-top: 10px;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+        /* Pink button on hover */
+        .btn-custom-color:hover {
+            background-color: #FF006B;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <p class="slogan">{% trans 'Are you sure you want to sign out?' %}</p>
+        </div>
+        {% url 'account_logout' as action_url %}
+        {% element form method="post" action=action_url no_visible_fields=True %}
+        {% slot body %}
+        {% csrf_token %}
+        {{ redirect_field }}
+        {% endslot %}
+        {% slot actions %}
+        <button type="submit" class="btn btn-light btn-lg btn-custom-color">
+            {% trans 'Sign Out' %}
+        </button>
+        {% endslot %}
+        {% endelement %}
+    </div>
+</body>
+</html>
+{% endblock content %}

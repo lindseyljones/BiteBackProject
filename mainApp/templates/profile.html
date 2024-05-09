@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load socialaccount %}
+{% load static %}
+{% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="globals.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mainApp/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'mainApp/styleguide.css' %}" type="text/css">
+</head>
+
+{% block extra-css %}
+    <link rel="stylesheet" href="{% static 'mainApp/posts.css' %}" type="text/css">
+{% endblock %}
+<body>
+  {% block myposts %}
+  {% endblock %}
+</body>
+{% block posts %}
+<div class="overlap-4">
+    <div class="text-wrapper-12">12 mins ago</div>
+    {% for post in user_post %}
+    <div class="post">
+      <div class="overlap-5">
+        <div class="overlap-6">
+          <!-- <img class="image" src="img/image-2.png" /> -->
+          <p class="yo-don-t-bother">
+            {{ post.Description }}
+          </p>
+        </div>
+        <div class="post-user">
+          <!-- <img class="ellipse-2" src="img/ellipse-2.png" /> -->
+          <div class="text">
+            <div class="text-wrapper-13">You</div>
+            <div class="text-wrapper-14">Chipotle</div>
+            <div class="group-5">
+              <div class="overlap-group-4">
+                <!-- <img class="line-4" src="img/line-2-2.svg" /> <img class="line-5" src="img/line-3.svg" /> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="likes"><div class="text-wrapper-15">128</div></div>
+        <div class="likes-2"><div class="text-wrapper-16">3</div></div>          
+        <!-- <img class="vector-2" src="img/vector-1.svg" /> -->
+        </div>
+        <!-- <img class="vector-3" src="img/vector.svg" /> -->
+        <div class="frame-3">
+          <!-- <img class="comment-multiple" src="img/image.svg" /> -->
+          <div class="text-wrapper-26">14</div>
+        </div>
+        <div class="frame-4">
+          <!-- <img class="forword" src="img/forword.svg" /> -->
+          <div class="text-wrapper-27">52</div>
+        </div>
+        <div class="frame-wrapper"><img class="frame-5" src="img/frame.svg" /></div>
+        <div class="overlap-wrapper">
+          <div class="overlap-7">
+            <div class="rectangle-3"></div>
+            <div class="text-wrapper-28">Food Stock</div>
+          </div>
+        </div>
+        <!-- <img class="vector-4" src="img/vector-3.svg" /> -->
+      </div>
+    </div>
+    {% endfor %}
+    <img class="image-add-undefined" src="img/undefined-2.svg" />
+  </div>
+{% endblock %}
+</html>

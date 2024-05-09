@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+{% load static %}
+{% load django_bootstrap5 %}
+
+
+
+{% block posts %}
+<div>
+    <form method="post" style="display: flex; flex-direction: column;" action="{% url 'submit_report' %}">
+        <div style="display: flex; flex-direction: column; width: fit-content; margin: auto;">
+            <h1 style="padding-top: 20px; font-size: 2vw; padding-bottom: 30px;">Report Post: {{post.title}}</h1>
+            <hr>
+            {% csrf_token %}
+            <label for="label" style="font-size: 1vw;">Report Reason:</label>
+            <br>
+            <select name="label" id="status_{{ post.id }}"
+                style="width: fit-content; font-size: 1vw; margin-bottom:10px ;" class="form-select">
+                <option value="Inaccurate Post" selected>Inaccurate Post</option>
+                <option value="Inappropriate Post" >Inappropriate Post</option>
+                <option value="Spam" >Spam</option>
+                <option value="Harrassment or Bullying" >Harrassment or Bullying</option>
+                <option value="Post Is Resolved">Issue Is Resolved</option>
+                <option value="Other">Other</option>
+            </select>
+            <hr>
+            <label for="content" style="font-size: 1vw;">Justify Your Report Here:</label>
+            <br>
+            <textarea name="content" style="width: 40vw; font-size: 1vw; margin-bottom: 10px;" class="form-control"
+                placeholder="300 characters" maxlength="300" required></textarea>
+            <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-lg"
+                style="width: fit-content; font-size: 1vw; border:none; background-color: #FF006B;">Submit
+                Report</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+    <div id="welcomeTab" class="d-flex flex-nowrap position-fixed" style="min-height: 100vh; width: 20vw; right: 0; background-color: #212529;text-align:center;">
+{% endblock %}

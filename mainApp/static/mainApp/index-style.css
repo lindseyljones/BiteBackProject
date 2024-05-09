@@ -1,0 +1,112 @@
+.post-profile-image {
+    height: 2rem;
+    width: 2rem;
+}
+
+.active-nav-bg{
+    background-color: #FF006B !important;
+    color: white;
+}
+
+body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    overflow-x: visible;
+}
+
+html {
+    height: -webkit-fill-available;
+}
+
+.btn-custom-color {
+    background-color: #FF006B !important;
+    border-color: #FF006B !important;
+    color: #fff;
+}
+
+.btn-outline-custom-color {
+    border-color: #FF006B !important;
+    color: #FF006B;
+}
+
+.topic-button {
+    background-color: #FF006B;
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 20px;
+    cursor: default;
+    font-size: 12px;
+}
+
+.topic-button-2 {
+    background-color: #212529;
+    color: #fff;
+    padding: 2px 12px;
+    border-radius: 20px;
+    cursor: default;
+    font-size: 12px;
+}
+
+.card-header {
+    justify-content: space-between;
+}
+
+.small-font {
+    font-size: 12px;
+}
+
+.slogan {
+    font-size: 16px;
+    color: #FF006B;
+    margin-top: 10px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+
+.report-button {
+    float: right;
+    margin-left: 10px;
+  }
+
+#restaurantPanel {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+    width: 20vw;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
+.dropdown-item label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+.dropdown-item input[type="checkbox"] {
+      margin-right: 10px;
+}
+
+.center-elements{
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+}
+
+.right-elements{
+    margin-top: 15px;
+    justify-content: right;
+    align-items: right;
+}
+
+.status-filter-buttons{
+    margin-right: 10px;
+}
