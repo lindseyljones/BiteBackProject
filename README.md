@@ -1,41 +1,16 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/qgEWmaMc)
-# Biteback (Project A01)
+# Biteback (A Course Project for the University of Virginia)
 
-__Name:__ Manisha Chaudhary, Andy Li, Nolan Hill, Lindsey Jones, Prabhath Tangella
+## My Responsibilities
 
-__Computing ID:__ efu3jj, rgq7yd, njq4gy, llj2qjf, nww7sm
+### I was the Requirement Manager for this project development team. I handled the requirement elicitation process, created the GitHub issues and generated requirements needed to produce a final project that meets the needs of the potential users.
 
-
-Sources Used:
-
-- https://www.youtube.com/watch?v=DVc9VRt-7IQ
-- https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html
-- https://medium.com/jungletronics/all-auth-with-django-allauth-5f7451db652b
-- https://getbootstrap.com/docs/5.3/getting-started/introduction/
-- https://stackoverflow.com/questions/5871730/how-to-upload-a-file-in-django
+### On the code side, I helped implement the functionality of the sites by creating the following features:
+- uploading profile pictures from google login information
+- admin capability of updating the status of a post
+- textboxes for unique resolution messages
+- restaurant information using Google Places API
 
 
-Various AI Prompts Used:
-
--How do I get an image to render on the page if I'm getting it from an s3 bucket using a presigned url?
-
--I'm making a website that users can login to using google. But I also want there to be an option where users can remain anonymous and still post. How should I do this in django?
-
--How do I make a field in a django model that can only be edited by the admin?
-
--How to share s3 bucket with IAM users and give edit access.
-
--If an anonymous user tries to report a post they get a server error. Instead of that how can I put a django pop up error that says please log in to report?
-
--How to get google profile picture from OAuth in Django?
-
--How to set input from text field in html equal to a Django variable?
-
--Why does it say Session data corrupted when using API in python?
-
-
-
-*ChatGPT was also used to understand various error messages and styling issues.*
 
 
 
